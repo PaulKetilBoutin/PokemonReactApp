@@ -8,6 +8,7 @@ ul {
   columns: 4;
   -webkit-columns: 4;
   -moz-columns: 4;
+  list-style: none;
 }
 .logo {
   height: 6em;
@@ -20,6 +21,12 @@ ul {
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+table {
+  table-layout: fixed;
+  border: 1px solid;
+  width: 105%;
 }
 
 @keyframes logo-spin {

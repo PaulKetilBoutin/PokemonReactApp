@@ -1,6 +1,6 @@
 import { Pokemon } from "./Pokemon"
 
-export function ListPokemons({pokemons}) {
+export function ListPokemons({pokemons, addPokemonToPokedex, addMoreInfo}) {
     return (
         <ul>
             {pokemons.length == 0 && "No pokemons"}
@@ -10,9 +10,11 @@ export function ListPokemons({pokemons}) {
                         <table>
                             <thead><tr><th>{pokemon.name}</th></tr></thead>
                                 <tbody>
-                                    <Pokemon poke={pokemon.name} />
+                                    <Pokemon poke={pokemon.name} addMoreInfo={addMoreInfo}/>
                                 </tbody>
                         </table>
+                        
+                        <button onClick={() => addPokemonToPokedex(pokemon)}>Add me !</button>
                     </li>
                 )
             }
