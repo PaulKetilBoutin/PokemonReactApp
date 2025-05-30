@@ -19,13 +19,24 @@ function App() {
   }, [pokedex])
 
   useEffect(() => {
-    fetch(url).then((response) => response.json()).then((json) => {
-      setPokemons(json.results)
-      setPrevUrl(json.previous)
-      setNextUrl(json.next)
+    if (JSON.parse(localStorage.getItem(url))) {
+      console.log("CACHED data")
+      const res = JSON.parse(localStorage.getItem(url))
+      setPokemons(res.results)
+      setPrevUrl(res.previous)
+      setNextUrl(res.next)
       if (localStorage.getItem("pokedex")) setPokedex(JSON.parse(localStorage.getItem("pokedex")))
-  })
-    .catch(error => console.error('Error fetching data:', error))
+    }
+    else {
+      fetch(url).then((response) => response.json()).then((json) => {
+        setPokemons(json.results)
+        setPrevUrl(json.previous)
+        setNextUrl(json.next)
+        localStorage.setItem(url, JSON.stringify(json))
+        if (localStorage.getItem("pokedex")) setPokedex(JSON.parse(localStorage.getItem("pokedex")))
+    })
+      .catch(error => console.error('Error fetching data:', error))
+    }
   },[url])
 
   function addPokemonToPokedex(pokemonToAdd) {
