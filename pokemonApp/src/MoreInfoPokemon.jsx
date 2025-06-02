@@ -39,6 +39,17 @@ export function MoreInfoPokemon({moreInfoPokemon}){
                 <li>
                 </li>
             </ul>
+            Stats :
+            <ul>
+                {moreInfoPokemon.stats.map((stat) => {
+                    console.log(stat)
+                    return (
+                        <li key={moreInfoPokemon.name + stat.stat.name}>{stat.stat.name} : {stat.base_stat}</li>
+                    )
+                })}
+                <li>
+                </li>
+            </ul>
             
         </div>
         </>

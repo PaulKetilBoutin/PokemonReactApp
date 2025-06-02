@@ -7,9 +7,9 @@ export function ListPokemons({pokemons, addPokemonToPokedex, addMoreInfo}) {
     }
 
     function addTolocalStorage(pokemon){
-        const pokemonList = localStorage.getItem("pokemonList")
+        const pokemonList = JSON.parse(localStorage.getItem("pokemonList"))
         console.log("ADDING pokemon to localStorage")
-        if (pokemonList != null && !pokemonList.includes(pokemon.name)) localStorage.setItem("pokemonList", [...pokemonList, pokemon])
+        if (pokemonList != null && !pokemonList.includes(pokemon.name)) localStorage.setItem("pokemonList", JSON.stringify([...pokemonList, pokemon.name]))
     }
     return (
         <ul>
