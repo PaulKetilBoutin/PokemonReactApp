@@ -10,6 +10,9 @@ ul {
   -moz-columns: 4;
   list-style: none;
 }
+li {
+  display: grid;
+}
 .logo {
   height: 6em;
   padding: 1.5em;

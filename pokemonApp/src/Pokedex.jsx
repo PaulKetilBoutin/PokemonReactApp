@@ -10,7 +10,7 @@ export function Pokedex({pokedex, removePokemonFromPokedex}){
                                     <table>
                                         <thead><tr><th>{pokemon.name}</th></tr></thead>
                                             <tbody>
-                                                <Pokemon poke={pokemon.name} />
+                                                <Pokemon poke={pokemon.name} pokedex={true} />
                                             </tbody>
                                     </table>
                                     <button onClick={() => removePokemonFromPokedex(pokemon)}>Remove me !</button>

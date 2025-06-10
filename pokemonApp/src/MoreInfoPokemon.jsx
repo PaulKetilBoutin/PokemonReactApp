@@ -1,5 +1,40 @@
+import { useEffect, useState } from "react";
+
 export function MoreInfoPokemon({moreInfoPokemon}){
+    const [evolution, setEvolution] = useState({})
     
+    useEffect(() => {
+        console.log("HERE MORE INFO FETCH EVOLUTION")
+        console.log(moreInfoPokemon)
+        if (Object.keys(moreInfoPokemon).length == 0) {
+            console.log("EMPTY")
+            console.log(moreInfoPokemon)
+            return
+        }
+        const url = 'https://pokeapi.co/api/v2/pokemon-species/' + moreInfoPokemon.id
+        fetch(url)
+        .then((response) => response.json())
+        .then((json) => {
+            let newInfo = evolution
+            let name = moreInfoPokemon.name
+            let evo = json.evolution_chain.url
+            fetch(evo)
+            .then((resp) => resp.json())
+            .then((json2) => {
+                let evoChain = []
+                evoChain.push(json2.chain.species.name)
+                if ("evolves_to" in json2.chain) evoChain.push(json2.chain.evolves_to[0].species.name)
+                if ("evolves_to" in json2.chain.evolves_to[0]) evoChain.push(json2.chain.evolves_to[0].evolves_to[0].species.name)
+                Object.assign(newInfo, {[name]: evoChain})
+                setEvolution(newInfo)
+            })
+            
+            console.log("EVOLUTION")
+            console.log(evo)
+            console.log(evolution)
+        })
+        .catch(error => console.error('Error fetching data:', error))
+    }, [moreInfoPokemon])
     console.log("UPDATE MORE INFO")
     console.log(moreInfoPokemon)
     if (Object.keys(moreInfoPokemon).length == 0) {
@@ -49,6 +84,16 @@ export function MoreInfoPokemon({moreInfoPokemon}){
                 })}
                 <li>
                 </li>
+            </ul>
+            Evolution : 
+            <ul>
+                {console.log("HELLOOOOOOO COUCOUCOUCOUCOU")}
+                {console.log(evolution)}
+                {evolution.hasOwnProperty(moreInfoPokemon.name) && evolution[moreInfoPokemon.name].map((evolve) => {
+                    return (
+                        <li key={moreInfoPokemon.name + evolve}> {evolve}</li>
+                    )
+                })}
             </ul>
             
         </div>

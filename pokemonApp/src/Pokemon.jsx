@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useEffect } from "react"
 
-export function Pokemon({poke, addMoreInfoPokemon}) {
+export function Pokemon({poke, addMoreInfoPokemon, pokedex=false}) {
 const [info, setInfo] = useState({})
 
     useEffect(() => {
@@ -22,7 +22,9 @@ const [info, setInfo] = useState({})
             <td>height: {info.height}</td>
             <td>weight: {info.weight}</td>
             <td>{info.sprites ? <img src={info.sprites.front_default}/>: null}</td>
+            {!pokedex && 
             <td><button onClick={() => addMoreInfoPokemon(info)}>More info !</button></td>
+            }
         </tr>
     )
 }
