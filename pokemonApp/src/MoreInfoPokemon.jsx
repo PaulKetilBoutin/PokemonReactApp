@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import Evolution from "./Evolution";
 
 export function MoreInfoPokemon({moreInfoPokemon}){
     const [evolution, setEvolution] = useState({})
@@ -15,10 +16,9 @@ export function MoreInfoPokemon({moreInfoPokemon}){
         fetch(url)
         .then((response) => response.json())
         .then((json) => {
-            let newInfo = evolution
-            let name = moreInfoPokemon.name
             let evo = json.evolution_chain.url
-            fetch(evo)
+            setEvolution(evo)
+            /*fetch(evo)
             .then((resp) => resp.json())
             .then((json2) => {
                 let evoChain = []
@@ -27,7 +27,7 @@ export function MoreInfoPokemon({moreInfoPokemon}){
                 if ("evolves_to" in json2.chain.evolves_to[0]) evoChain.push(json2.chain.evolves_to[0].evolves_to[0].species.name)
                 Object.assign(newInfo, {[name]: evoChain})
                 setEvolution(newInfo)
-            })
+            })*/
             
             console.log("EVOLUTION")
             console.log(evo)
@@ -86,16 +86,9 @@ export function MoreInfoPokemon({moreInfoPokemon}){
                 </li>
             </ul>
             Evolution : 
-            <ul>
-                {console.log("HELLOOOOOOO COUCOUCOUCOUCOU")}
-                {console.log(evolution)}
-                {evolution.hasOwnProperty(moreInfoPokemon.name) && evolution[moreInfoPokemon.name].map((evolve) => {
-                    return (
-                        <li key={moreInfoPokemon.name + evolve}> {evolve}</li>
-                    )
-                })}
-            </ul>
-            
+            <Suspense fallback={<div>Loading</div>}>
+                <Evolution evolution={evolution} name={moreInfoPokemon.name} />
+            </Suspense>
         </div>
         </>
     )
