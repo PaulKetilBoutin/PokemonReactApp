@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 
 export default function Evolution({evolution, name}) {
     const [evolutionData, setEvolutionData] = useState([])
-    const [loading, setLoading] = useState(true) // <=== STYLé
+    const [loading, setLoading] = useState(true) // <=== Loading work around
 
     useEffect(() => {
         if (name in evolutionData || Object.keys(evolution).length == 0) return

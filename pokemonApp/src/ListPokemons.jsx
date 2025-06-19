@@ -3,6 +3,8 @@ import { Pokemon } from "./Pokemon"
 export function ListPokemons({pokemons, addPokemonToPokedex, addMoreInfo}) {
 
     function addMoreInfoPokemon(pokemon){
+        console.log("DANS ADDMOREINGOT POKEMON")
+        console.log(pokemon)
         addMoreInfo(pokemon)
     }
 

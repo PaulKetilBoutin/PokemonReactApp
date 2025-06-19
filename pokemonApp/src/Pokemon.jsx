@@ -23,7 +23,11 @@ const [info, setInfo] = useState({})
             <td>weight: {info.weight}</td>
             <td>{info.sprites ? <img src={info.sprites.front_default}/>: null}</td>
             {!pokedex && 
-            <td><button onClick={() => addMoreInfoPokemon(info)}>More info !</button></td>
+            <td><button onClick={() => {
+                console.log("DANS POKE")
+                console.log(info) 
+                addMoreInfoPokemon(info)}
+            }>More info !</button></td>
             }
         </tr>
     )

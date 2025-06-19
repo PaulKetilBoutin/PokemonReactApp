@@ -54,10 +54,11 @@ function App() {
   function addMoreInfo(pokemon){
     setMoreInfoPokemon(pokemon)
     console.log("HELLOOOO")
+    console.log(pokemon)
     console.log(moreInfoPokemon)
   }
 
-  function addPokemons(pokes) {
+  const addPokemons = (pokes) => {
     console.log(pokes)
     console.log(pokemons)
     if (pokes) setPokemons([pokes])
