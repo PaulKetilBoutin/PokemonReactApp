@@ -4,6 +4,8 @@ import { ListPokemons } from './ListPokemons'
 import { SearchBarPokemon } from './SearchBarPokemon'
 import { Pokedex } from './Pokedex'
 import { MoreInfoPokemon } from './MoreInfoPokemon'
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 function App() {
   const [pokemons, setPokemons] = useState([])
@@ -12,6 +14,7 @@ function App() {
   const [prevUrl, setPrevUrl] = useState(null)
   const [nextUrl, setNextUrl] = useState(null)
   const [moreInfoPokemon, setMoreInfoPokemon] = useState({})
+  const defaultUrl = "https://pokeapi.co/api/v2/pokemon/"
   
   useEffect(() => {
     if (pokedex.length === 0) return 
@@ -19,6 +22,7 @@ function App() {
   }, [pokedex]) 
 
   useEffect(() => {
+    if (url == "RESET") setUrl(defaultUrl)
     if (JSON.parse(localStorage.getItem(url))) { // check if data already in local stroage before fetch
       const res = JSON.parse(localStorage.getItem(url))
       setPokemons(res.results)
@@ -27,6 +31,7 @@ function App() {
       if (localStorage.getItem("pokedex")) setPokedex(JSON.parse(localStorage.getItem("pokedex")))
     }
     else {
+      if (url == "RESET") return
       fetch(url).then((response) => response.json()).then((json) => {
         setPokemons(json.results)
         setPrevUrl(json.previous)
@@ -61,15 +66,17 @@ function App() {
   return (
     <>
     <SearchBarPokemon addPokemons={addPokemons}/>
-    <button onClick={() => setUrl("https://pokeapi.co/api/v2/pokemon")}>Reset Search</button>
+    <Button variant="outlined" onClick={() => setUrl("RESET")}>Reset Search</Button>
     <h2>My Team</h2>
     <Pokedex pokedex={pokedex} removePokemonFromPokedex={removePokemonFromPokedex}/>
     <h2>More info</h2>
     <MoreInfoPokemon moreInfoPokemon={moreInfoPokemon} />
     <h2>All pokemons</h2>
     <ListPokemons pokemons={pokemons} addPokemonToPokedex={addPokemonToPokedex} addMoreInfo={addMoreInfo}/>
-    {prevUrl !== null ? <button onClick={() => setUrl(prevUrl)}>Prev page</button> : null}
-    <button onClick={() => setUrl(nextUrl)}>Next page</button>
+    <Stack spacing={2} direction="row">
+       {prevUrl !== null ? <Button variant="contained" onClick={() => setUrl(prevUrl)}>Prev page</Button> : null }
+      <Button variant="contained" onClick={() => setUrl(nextUrl)}>Next page</Button>
+    </Stack>
     </>
   )
 }

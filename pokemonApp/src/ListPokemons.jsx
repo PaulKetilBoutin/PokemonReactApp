@@ -1,4 +1,6 @@
 import { Pokemon } from "./Pokemon"
+import Button from '@mui/material/Button';
+
 
 export function ListPokemons({pokemons, addPokemonToPokedex, addMoreInfo}) {
 
@@ -24,7 +26,7 @@ export function ListPokemons({pokemons, addPokemonToPokedex, addMoreInfo}) {
                                 </tbody>
                         </table>
                         
-                        <button onClick={() => addPokemonToPokedex(pokemon)}>Add me !</button>
+                        <Button variant="contained" onClick={() => addPokemonToPokedex(pokemon)}>Add me !</Button>
                     </li>
                 )
             }

@@ -1,4 +1,6 @@
 import { Pokemon } from "./Pokemon"
+import Button from '@mui/material/Button';
+
 
 export function Pokedex({pokedex, removePokemonFromPokedex}){
     return (
@@ -13,7 +15,7 @@ export function Pokedex({pokedex, removePokemonFromPokedex}){
                                                 <Pokemon poke={pokemon.name} pokedex={true} />
                                             </tbody>
                                     </table>
-                                    <button onClick={() => removePokemonFromPokedex(pokemon)}>Remove me !</button>
+                                    <Button variant="contained" onClick={() => removePokemonFromPokedex(pokemon)}>Remove me !</Button>
                                 </li>
                             )
                         }

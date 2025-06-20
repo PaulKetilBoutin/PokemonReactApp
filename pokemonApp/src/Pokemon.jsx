@@ -1,5 +1,7 @@
 import { useState } from "react"
 import { useEffect } from "react"
+import Button from '@mui/material/Button';
+
 
 export function Pokemon({poke, addMoreInfoPokemon, pokedex=false}) {
 const [info, setInfo] = useState({})
@@ -23,9 +25,9 @@ const [info, setInfo] = useState({})
             <td>weight: {info.weight}</td>
             <td>{info.sprites ? <img src={info.sprites.front_default}/>: null}</td>
             {!pokedex && 
-            <td><button onClick={() => {
+            <td><Button variant="outlined" onClick={() => {
                 addMoreInfoPokemon(info)}
-            }>More info !</button></td>
+            }>More info !</Button></td>
             }
         </tr>
     )
