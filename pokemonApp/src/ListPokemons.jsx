@@ -2,15 +2,12 @@ import { Pokemon } from "./Pokemon"
 
 export function ListPokemons({pokemons, addPokemonToPokedex, addMoreInfo}) {
 
-    function addMoreInfoPokemon(pokemon){
-        console.log("DANS ADDMOREINGOT POKEMON")
-        console.log(pokemon)
+    const addMoreInfoPokemon = (pokemon) => {
         addMoreInfo(pokemon)
     }
 
-    function addTolocalStorage(pokemon){
+    const addTolocalStorage = (pokemon) => {
         const pokemonList = JSON.parse(localStorage.getItem("pokemonList"))
-        console.log("ADDING pokemon to localStorage")
         if (pokemonList != null && !pokemonList.includes(pokemon.name)) localStorage.setItem("pokemonList", JSON.stringify([...pokemonList, pokemon.name]))
     }
     return (

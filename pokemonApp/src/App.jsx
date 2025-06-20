@@ -9,18 +9,17 @@ function App() {
   const [pokemons, setPokemons] = useState([])
   const [pokedex, setPokedex] = useState([])
   const [url, setUrl] = useState("https://pokeapi.co/api/v2/pokemon/")
-  const [prevUrl, setPrevUrl] = useState("")
-  const [nextUrl, setNextUrl] = useState("")
+  const [prevUrl, setPrevUrl] = useState(null)
+  const [nextUrl, setNextUrl] = useState(null)
   const [moreInfoPokemon, setMoreInfoPokemon] = useState({})
   
   useEffect(() => {
     if (pokedex.length === 0) return 
     localStorage.setItem("pokedex", JSON.stringify(pokedex))
-  }, [pokedex])
+  }, [pokedex]) 
 
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem(url))) {
-      console.log("CACHED data")
+    if (JSON.parse(localStorage.getItem(url))) { // check if data already in local stroage before fetch
       const res = JSON.parse(localStorage.getItem(url))
       setPokemons(res.results)
       setPrevUrl(res.previous)
@@ -39,28 +38,23 @@ function App() {
     }
   },[url])
 
-  function addPokemonToPokedex(pokemonToAdd) {
+  const addPokemonToPokedex = (pokemonToAdd) => {
     const pokemonToAddCloned = JSON.parse(JSON.stringify(pokemonToAdd))  // Deep copy to enable several instance of same pokemon in pokedex 
     if (pokedex.length == 6) return
     setPokedex([...pokedex, pokemonToAddCloned])
   }
 
-  function removePokemonFromPokedex(pokemonToRemoveId) {
+  const removePokemonFromPokedex = (pokemonToRemoveId) => {
     setPokedex(() => {
         return pokedex.filter(pokemon => pokemon !== pokemonToRemoveId)
         })
   }
 
-  function addMoreInfo(pokemon){
+  const addMoreInfo = (pokemon) => {
     setMoreInfoPokemon(pokemon)
-    console.log("HELLOOOO")
-    console.log(pokemon)
-    console.log(moreInfoPokemon)
   }
 
   const addPokemons = (pokes) => {
-    console.log(pokes)
-    console.log(pokemons)
     if (pokes) setPokemons([pokes])
   }
 
@@ -74,7 +68,7 @@ function App() {
     <MoreInfoPokemon moreInfoPokemon={moreInfoPokemon} />
     <h2>All pokemons</h2>
     <ListPokemons pokemons={pokemons} addPokemonToPokedex={addPokemonToPokedex} addMoreInfo={addMoreInfo}/>
-    {prevUrl !== "" ? <button onClick={() => setUrl(prevUrl)}>Prev page</button> : null}
+    {prevUrl !== null ? <button onClick={() => setUrl(prevUrl)}>Prev page</button> : null}
     <button onClick={() => setUrl(nextUrl)}>Next page</button>
     </>
   )

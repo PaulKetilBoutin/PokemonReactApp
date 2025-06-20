@@ -5,30 +5,18 @@ export function MoreInfoPokemon({moreInfoPokemon}){
     const [evolution, setEvolution] = useState("")
     
     useEffect(() => {
-        console.log("HERE MORE INFO FETCH EVOLUTION")
-        console.log(moreInfoPokemon)
-        if (Object.keys(moreInfoPokemon).length == 0) {
-            console.log("EMPTY")
-            console.log(moreInfoPokemon)
-            return
-        }
+        if (Object.keys(moreInfoPokemon).length == 0) return
         const url = 'https://pokeapi.co/api/v2/pokemon-species/' + moreInfoPokemon.id
         fetch(url)
         .then((response) => response.json())
         .then((json) => {
             let evo = json.evolution_chain.url
             setEvolution(evo)
-            console.log("EVOLUTION")
-            console.log(evo)
-            console.log(evolution)
         })
         .catch(error => console.error('Error fetching data:', error))
     }, [moreInfoPokemon])
-    console.log("UPDATE MORE INFO")
-    console.log(moreInfoPokemon)
-    if (Object.keys(moreInfoPokemon).length == 0) {
-        return (<div>No info</div>)
-    }
+
+    if (Object.keys(moreInfoPokemon).length == 0) return (<div>No info</div>)
     const style_div_in = {
         display: "inline-block",
         width: "100%",
@@ -66,7 +54,6 @@ export function MoreInfoPokemon({moreInfoPokemon}){
             Stats :
             <ul>
                 {moreInfoPokemon.stats.map((stat) => {
-                    console.log(stat)
                     return (
                         <li key={moreInfoPokemon.name + stat.stat.name}>{stat.stat.name} : {stat.base_stat}</li>
                     )
@@ -75,9 +62,7 @@ export function MoreInfoPokemon({moreInfoPokemon}){
                 </li>
             </ul>
             Evolution : 
-            <Suspense fallback={<div>Loading</div>}>
-                <Evolution evolution={evolution} name={moreInfoPokemon.name} />
-            </Suspense>
+                <Evolution evolution={evolution} setEvolution={setEvolution} name={moreInfoPokemon.name} />
         </div>
         </>
     )

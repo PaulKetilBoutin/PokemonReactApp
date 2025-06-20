@@ -24,8 +24,6 @@ const [info, setInfo] = useState({})
             <td>{info.sprites ? <img src={info.sprites.front_default}/>: null}</td>
             {!pokedex && 
             <td><button onClick={() => {
-                console.log("DANS POKE")
-                console.log(info) 
                 addMoreInfoPokemon(info)}
             }>More info !</button></td>
             }

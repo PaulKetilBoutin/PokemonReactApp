@@ -10,12 +10,11 @@ export function SearchBarPokemon({addPokemons}){
       setPokemonsNames(JSON.parse(localStorage.getItem("pokemonList")))
     }
 
-    useEffect(() => { // refresh the pokemon List from local storage at each time a pokemon is added to the list
+    useEffect(() => { // refresh the pokemon List from local storage each time a pokemon is added to the list
       setPokemonsNames(JSON.parse(localStorage.getItem("pokemonList")))
     }, [localStorage.getItem('pokemonList')])
 
     useEffect(() => {
-      console.log(newItem)
       if (!newItem || newItem === "undefined") return
       fetch("https://pokeapi.co/api/v2/pokemon/"+newItem).then((response) => response.json())
       .then((json) => {
@@ -27,7 +26,6 @@ export function SearchBarPokemon({addPokemons}){
     return (
         <form onSubmit={(e) => {
           e.preventDefault()
-          console.log("VALUE:"+newItem)
           setSearch(newItem)
           }}>
             <input list="pokemonSearch" type="text" onChange={(e) => setNewItem(e.target.value)}></input>
