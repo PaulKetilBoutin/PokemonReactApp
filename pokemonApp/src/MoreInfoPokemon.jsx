@@ -1,5 +1,12 @@
 import { Suspense, useEffect, useState } from "react";
 import Evolution from "./Evolution";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 export function MoreInfoPokemon({moreInfoPokemon}){
     const [evolution, setEvolution] = useState("")
@@ -17,53 +24,48 @@ export function MoreInfoPokemon({moreInfoPokemon}){
     }, [moreInfoPokemon])
 
     if (Object.keys(moreInfoPokemon).length == 0) return (<div>No info</div>)
-    const style_div_in = {
-        display: "inline-block",
-        width: "100%",
-        padding: "5px",
-        position: "relative",
-        right: "0"
-        };
-    const style_div_out = {
-        padding: "10px",
-        display: "flex"
-    };
-    const style_img = {
-        display: "inline-block",
-        position: "relative",
-        left: "0"
-    };
+
+    const rows = [
+        {"name": 'Base Exp', "stats": moreInfoPokemon.base_experience},
+        {"name": 'Height', "stats": moreInfoPokemon.height},
+        {"name": 'Weight', "stats": moreInfoPokemon.weight},
+        {"name": 'Abilities', "stats": moreInfoPokemon.abilities.map((abilitie) => {return ([abilitie.ability.name])}).toString()},
+    ];
     return(
         <>
-            <img src={moreInfoPokemon.sprites.front_default} style={style_img}/>
-            <div style={style_div_in}> <br/>
-            Name : {moreInfoPokemon.name} <br/>
-            Base Exp : {moreInfoPokemon.base_experience} <br/>
-            Height : {moreInfoPokemon.height} <br/>
-            Weight : {moreInfoPokemon.weight} <br/>
-            Abilities :
-            <ul>
-                {moreInfoPokemon.abilities.map((abilitie) => {
-                    return (
-                        <li key={moreInfoPokemon.name + abilitie.ability.name}>{abilitie.ability.name}</li>
-                    )
-                })}
-                <li>
-                </li>
-            </ul>
-            Stats :
-            <ul>
-                {moreInfoPokemon.stats.map((stat) => {
-                    return (
-                        <li key={moreInfoPokemon.name + stat.stat.name}>{stat.stat.name} : {stat.base_stat}</li>
-                    )
-                })}
-                <li>
-                </li>
-            </ul>
-            Evolution : 
-                <Evolution evolution={evolution} setEvolution={setEvolution} name={moreInfoPokemon.name} />
-        </div>
+            <img src={moreInfoPokemon.sprites.front_default}/>
+            <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead> 
+                <TableRow>
+                    <TableCell>{moreInfoPokemon.name}</TableCell>
+                    <TableCell align="right"> - </TableCell>
+                </TableRow>
+                </TableHead>
+                <TableBody>
+                {rows.map((row) => (
+                    <TableRow
+                    key={row.name}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                    <TableCell component="th" scope="row">
+                        {row.name}
+                    </TableCell>
+                    <TableCell align="right">{row.stats}</TableCell>
+                    </TableRow>
+                ))}
+                <TableRow
+                    key="Evolutions"
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                    <TableCell component="th" scope="row">
+                        Evolutions
+                    </TableCell>
+                    <TableCell align="right"><Evolution evolution={evolution} setEvolution={setEvolution} name={moreInfoPokemon.name} /></TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
+            </TableContainer>
         </>
     )
 }
