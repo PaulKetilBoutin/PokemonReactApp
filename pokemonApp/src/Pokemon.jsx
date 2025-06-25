@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useEffect } from "react"
 import Button from '@mui/material/Button';
+import { Box, Typography } from "@mui/material";
 
 
 export function Pokemon({poke, addMoreInfoPokemon, pokedex=false}) {
@@ -17,18 +18,14 @@ const [info, setInfo] = useState({})
     },[])
     
     return (
-        
-        <tr>
+        <Box>
             {info.length == 0 && "No Info"}
-            <td>id: {info.id}</td>
-            <td>height: {info.height}</td>
-            <td>weight: {info.weight}</td>
-            <td>{info.sprites ? <img src={info.sprites.front_default}/>: null}</td>
+            {info.sprites ? <img src={info.sprites.front_default}/>: null}
             {!pokedex && 
-            <td><Button variant="outlined" onClick={() => {
+            <Button variant="outlined" onClick={() => {
                 addMoreInfoPokemon(info)}
-            }>More info !</Button></td>
+            }>More info !</Button>
             }
-        </tr>
+        </Box>
     )
 }

@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import { ListPokemons } from './ListPokemons'
+import  ListPokemons from './ListPokemons'
 import { SearchBarPokemon } from './SearchBarPokemon'
 import { Pokedex } from './Pokedex'
 import { MoreInfoPokemon } from './MoreInfoPokemon'
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
 
 function App() {
   const [pokemons, setPokemons] = useState([])
@@ -64,20 +66,20 @@ function App() {
   }
 
   return (
-    <>
-    <SearchBarPokemon addPokemons={addPokemons}/>
-    <Button variant="outlined" onClick={() => setUrl("RESET")}>Reset Search</Button>
-    <h2>My Team</h2>
-    <Pokedex pokedex={pokedex} removePokemonFromPokedex={removePokemonFromPokedex}/>
-    <h2>More info</h2>
-    <MoreInfoPokemon moreInfoPokemon={moreInfoPokemon} />
-    <h2>All pokemons</h2>
-    <ListPokemons pokemons={pokemons} addPokemonToPokedex={addPokemonToPokedex} addMoreInfo={addMoreInfo}/>
-    <Stack spacing={2} direction="row">
-       {prevUrl !== null ? <Button variant="contained" onClick={() => setUrl(prevUrl)}>Prev page</Button> : null }
-      <Button variant="contained" onClick={() => setUrl(nextUrl)}>Next page</Button>
-    </Stack>
-    </>
+    <Container>
+      <SearchBarPokemon addPokemons={addPokemons}/>
+      <Button variant="outlined" onClick={() => setUrl("RESET")}>Reset Search</Button>
+      <Typography variant='h3'>My Team</Typography>
+      <Pokedex pokedex={pokedex} removePokemonFromPokedex={removePokemonFromPokedex}/>
+      <Typography variant='h3'>More info</Typography>
+      <MoreInfoPokemon moreInfoPokemon={moreInfoPokemon} />
+      <Typography variant='h3'>All pokemons</Typography>
+      <ListPokemons pokemons={pokemons} addPokemonToPokedex={addPokemonToPokedex} addMoreInfo={addMoreInfo}/>
+      <Stack spacing={2} direction="row">
+        {prevUrl !== null ? <Button variant="contained" onClick={() => setUrl(prevUrl)}>Prev page</Button> : null }
+        <Button variant="contained" onClick={() => setUrl(nextUrl)}>Next page</Button>
+      </Stack>
+    </Container>
   )
 }
 
